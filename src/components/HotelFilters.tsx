@@ -4,11 +4,12 @@ import { SortOrder } from "../types/SortOrder";
 
 import Slider from "@mui/material/Slider";
 import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
+import RadioGroup from "@mui/material/RadioGroup";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
+import Radio from "@mui/material/Radio";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 
 interface HotelFiltersProps {
   filters: HotelFilterOptions;
@@ -34,32 +35,34 @@ const HotelFilters: React.FC<HotelFiltersProps> = ({
   return (
     <>
       {/* Filter hotels by Star Rating */}
-      <Typography>Stars</Typography>
-      <Select
-        multiple
-        value={filters.stars}
-        onChange={(e) =>
-          onFilterChange({ ...filters, stars: e.target.value as number[] })
-        }
-        renderValue={(selected) => (selected as number[]).join(", ")}
-      >
-        {[1, 2, 3, 4, 5].map((rating) => (
-          <MenuItem key={rating} value={rating}>
-            <Typography variant="body2">{`${rating} Stars`}</Typography>
-          </MenuItem>
-        ))}
-      </Select>
+      <Typography fontWeight="bold">Stars</Typography>
+      {[1, 2, 3, 4, 5].map((rating) => (
+        <FormControlLabel
+          key={rating}
+          control={
+            <Checkbox
+              checked={filters.stars.includes(rating)}
+              onChange={(e) => {
+                const updatedStars = e.target.checked
+                  ? [...filters.stars, rating]
+                  : filters.stars.filter((star) => star !== rating);
+                onFilterChange({ ...filters, stars: updatedStars });
+              }}
+            />
+          }
+          label={`${rating} Stars`}
+        />
+      ))}
 
       {/* Filter hotels by Price Range */}
-      <Typography id="price-range-slider" gutterBottom>
-        Price Range
-      </Typography>
+      <Typography fontWeight="bold">Price Range</Typography>
       <Slider
         value={priceRange}
         onChange={onPriceChange}
         valueLabelDisplay="auto"
         min={absolutePriceRange[0]}
         max={absolutePriceRange[1]}
+        data-testid="price-slider"
       />
 
       {/* Filter hotels by Name (given a free-form text input) */}
@@ -72,34 +75,41 @@ const HotelFilters: React.FC<HotelFiltersProps> = ({
       />
 
       {/* Filter hotels by Review Rating */}
-      <Typography>Ratings</Typography>
-      <Select
-        multiple
-        value={filters.ratings}
-        onChange={(e) =>
-          onFilterChange({ ...filters, ratings: e.target.value as number[] })
-        }
-        renderValue={(selected) => (selected as number[]).join(", ")}
-      >
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((rating) => (
-          <MenuItem key={rating} value={rating}>
-            <Typography variant="body2">{`${rating}+`}</Typography>
-          </MenuItem>
-        ))}
-      </Select>
+      <Typography fontWeight="bold">Ratings</Typography>
+      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((rating) => (
+        <FormControlLabel
+          key={rating}
+          control={
+            <Checkbox
+              checked={filters.ratings.includes(rating)}
+              onChange={(e) => {
+                const updatedRatings = e.target.checked
+                  ? [...filters.ratings, rating]
+                  : filters.ratings.filter((r) => r !== rating);
+                onFilterChange({ ...filters, ratings: updatedRatings });
+              }}
+            />
+          }
+          label={`${rating}+`}
+        />
+      ))}
 
       {/* Sort hotels by Price */}
-      <Stack direction="row" spacing={2} alignItems="center">
-        <Typography variant="body1">Sort by price:</Typography>
-        <Select
-          value={sortOrder}
-          onChange={(e) => onSortOrderChange(e.target.value as SortOrder)}
-        >
-          <MenuItem value="">Clear</MenuItem>
-          <MenuItem value="asc">Low to High</MenuItem>
-          <MenuItem value="desc">High to Low</MenuItem>
-        </Select>
-      </Stack>
+      <Typography fontWeight="bold">Sort by price:</Typography>
+      <RadioGroup
+        data-testid="price-sort"
+        row
+        value={sortOrder}
+        onChange={(e) => onSortOrderChange(e.target.value as SortOrder)}
+      >
+        <FormControlLabel value="" control={<Radio />} label="Clear" />
+        <FormControlLabel value="asc" control={<Radio />} label="Low to High" />
+        <FormControlLabel
+          value="desc"
+          control={<Radio />}
+          label="High to Low"
+        />
+      </RadioGroup>
 
       <Button variant="outlined" onClick={clearFilters}>
         Clear Filters
