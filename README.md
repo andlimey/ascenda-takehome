@@ -1,6 +1,34 @@
-# Getting Started with Create React App
-
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Architecture
+
+The code is structured as such
+
+```
+api/        // Logic to retrieve the data
+components/ // Common components that can be used across pages
+types/      // Interfaces and types used across files
+```
+
+## Assumptions
+
+The assumptions are as such:
+
+1. API returns a reasonable number of hotels (including the reviews), so pagination is not required
+
+   - Otherwise the endpoint should contain an additional offset parameter
+
+2. For `HotelPage`, it is assumed that there is a separate endpoint to fetch individual hotels. Given that there is only a single endpoint, it simulates this by fetching all hotels and filtering based on the id.
+
+## Testing
+
+Tests are written using Jest and React Testing Library.
+
+## Disclaimers
+
+Personally, I am not familiar with React Testing Library. My current project at work does not have any frontend tests, something that the QAs in the division has pointed out is a problem. There were several reasons for this that I won't delve into. My point is that due to my unfamiliarity and the time constraint, I do not know the best practices to frontend testing, so the tests implemented are not my best work.
+
+I also used ChatGPT to generate boilerplate code for this takehome assignment.
 
 ## Available Scripts
 
