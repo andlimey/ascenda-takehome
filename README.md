@@ -20,6 +20,22 @@ The assumptions are as such:
 
 2. For `HotelPage`, it is assumed that there is a separate endpoint to fetch individual hotels. Given that there is only a single endpoint, it simulates this by fetching all hotels and filtering based on the id.
 
+## Components
+
+**HotelListContainer**
+
+Implements the filtering and sorting logic in a single useEffect.
+
+A potential improvement would be to refactor this into a custom hook to separate the implementation details, so that the container is only responsible for rendering `HotelFilters` and the list of `HotelCard`.
+
+**HotelCard**
+Renders information about the hotel in a `Card` component.
+
+**HotelPage**
+A detailed view of the hotel that includes the list of user reviews.
+
+It also implements a search functionality for the review content.
+
 ## Testing
 
 Tests are written using Jest and React Testing Library.
