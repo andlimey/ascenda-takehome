@@ -40,10 +40,10 @@ const HotelListContainer: React.FC<{}> = () => {
   }, []);
 
   useEffect(() => {
-    let updatedHotels = filterHotels(hotels, filters);
-    priceSort(updatedHotels, sortOrder);
-    
-    setFilteredHotels(updatedHotels);
+    const filteredHotels = filterHotels(hotels, filters);
+    const sortedHotels = priceSort(filteredHotels, sortOrder);
+
+    setFilteredHotels(sortedHotels);
   }, [hotels, filters, sortOrder]);
 
   return (
