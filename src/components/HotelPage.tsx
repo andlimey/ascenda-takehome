@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Hotel } from "../types/Hotel";
 import { fetchHotels } from "../api/hotelApi";
+import HotelReview from "./HotelReview";
+import NoResultsFoundMessage from "./NoResultsFoundMessage";
+
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
@@ -70,24 +73,11 @@ const HotelPage: React.FC = () => {
     );
 
     if (filteredReviews.length === 0) {
-      return (
-        <Typography variant="body1">
-          No results found. Reset filters!
-        </Typography>
-      );
+      return <NoResultsFoundMessage />;
     }
 
     return filteredReviews.map((review, index) => (
-      <Card data-testid="review" key={index} sx={{ mb: 2 }}>
-        <CardContent>
-          <Typography variant="subtitle1">{review.title}</Typography>
-          <Typography variant="body2" color="text.secondary">
-            By: {review.user.name} from {review.user.location}
-          </Typography>
-          <Typography variant="body2">User Rating: {review.rating}</Typography>
-          <Typography variant="body2">{review.description}</Typography>
-        </CardContent>
-      </Card>
+      <HotelReview key={index} review={review} />
     ));
   }
 

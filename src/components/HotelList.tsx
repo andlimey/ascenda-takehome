@@ -1,7 +1,7 @@
 import React from "react";
 import { Hotel } from "../types/Hotel";
 import HotelCard from "./HotelCard";
-import Typography from "@mui/material/Typography";
+import NoResultsFoundMessage from "./NoResultsFoundMessage";
 import Stack from "@mui/material/Stack";
 
 interface HotelListProps {
@@ -10,7 +10,7 @@ interface HotelListProps {
 
 const HotelList: React.FC<HotelListProps> = ({ hotels }) => {
   return hotels.length === 0 ? (
-    <Typography variant="body1">No results found. Reset filters!</Typography>
+    <NoResultsFoundMessage />
   ) : (
     <Stack spacing={2}>
       {hotels.map((hotel) => (
