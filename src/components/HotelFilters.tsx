@@ -1,6 +1,8 @@
 import React from "react";
 import { HotelFilterOptions } from "../types/HotelFilterOptions";
 import { SortOrder } from "../types/SortOrder";
+import { HOTEL_RATINGS } from "../constants/HotelRatings";
+import { HOTEL_STARS } from "../constants/HotelStars";
 
 import Slider from "@mui/material/Slider";
 import Button from "@mui/material/Button";
@@ -37,21 +39,21 @@ const HotelFilters: React.FC<HotelFiltersProps> = ({
     <Box>
       {/* Filter hotels by Star Rating */}
       <Typography fontWeight="bold">Stars</Typography>
-      {[1, 2, 3, 4, 5].map((rating) => (
+      {HOTEL_STARS.map((star) => (
         <FormControlLabel
-          key={rating}
+          key={star}
           control={
             <Checkbox
-              checked={filters.stars.includes(rating)}
+              checked={filters.stars.includes(star)}
               onChange={(e) => {
                 const updatedStars = e.target.checked
-                  ? [...filters.stars, rating]
-                  : filters.stars.filter((star) => star !== rating);
+                  ? [...filters.stars, star]
+                  : filters.stars.filter((star) => star !== star);
                 onFilterChange({ ...filters, stars: updatedStars });
               }}
             />
           }
-          label={`${rating} Stars`}
+          label={`${star} Stars`}
         />
       ))}
 
@@ -77,7 +79,7 @@ const HotelFilters: React.FC<HotelFiltersProps> = ({
 
       {/* Filter hotels by Review Rating */}
       <Typography fontWeight="bold">Ratings</Typography>
-      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((rating) => (
+      {HOTEL_RATINGS.map((rating) => (
         <FormControlLabel
           key={rating}
           control={
