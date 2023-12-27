@@ -8,6 +8,8 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import HotelList from "./HotelList";
 import HotelFilters from "./HotelFilters";
+import { filterHotels } from "../filters/filterHotels";
+import { priceSort } from "../sort/priceSort";
 
 const HotelListContainer: React.FC<{}> = () => {
   const [hotels, setHotels] = useState<Hotel[]>([]);
@@ -38,43 +40,9 @@ const HotelListContainer: React.FC<{}> = () => {
   }, []);
 
   useEffect(() => {
-    let updatedHotels = [...hotels];
-
-    if (filters.stars.length > 0) {
-      updatedHotels = updatedHotels.filter((hotel) => {
-        return filters.stars.includes(hotel.stars);
-      });
-    }
-
-    if (filters.minPrice !== undefined && filters.maxPrice !== undefined) {
-      updatedHotels = updatedHotels.filter(
-        (hotel) =>
-          hotel.price >= filters.minPrice! && hotel.price <= filters.maxPrice!
-      );
-    }
-
-    if (filters.searchText !== "") {
-      updatedHotels = updatedHotels.filter((hotel) =>
-        hotel.name.toLowerCase().includes(filters.searchText.toLowerCase())
-      );
-    }
-
-    if (filters.ratings.length > 0) {
-      updatedHotels = updatedHotels.filter((hotel) =>
-        filters.ratings.some((rating) => hotel.rating >= rating)
-      );
-    }
-
-    if (sortOrder !== "") {
-      updatedHotels.sort((a, b) => {
-        if (sortOrder === "asc") {
-          return a.price - b.price;
-        } else {
-          return b.price - a.price;
-        }
-      });
-    }
-
+    let updatedHotels = filterHotels(hotels, filters);
+    priceSort(updatedHotels, sortOrder);
+    
     setFilteredHotels(updatedHotels);
   }, [hotels, filters, sortOrder]);
 

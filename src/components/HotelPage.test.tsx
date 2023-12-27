@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen, waitFor, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import { mockHotelData } from "../fixtures/mockHotelData";
+import { mockHotelsData } from "../fixtures/mockHotelsData";
 
 import HotelPage from "./HotelPage";
 import { fetchHotels } from "../api/hotelApi";
@@ -11,7 +11,7 @@ jest.mock("../api/hotelApi");
 
 describe("HotelPage Component", () => {
   beforeEach(() => {
-    (fetchHotels as jest.Mock).mockResolvedValue(mockHotelData);
+    (fetchHotels as jest.Mock).mockResolvedValue(mockHotelsData);
   });
 
   test("Renders circular progress if hotel is undefined", () => {

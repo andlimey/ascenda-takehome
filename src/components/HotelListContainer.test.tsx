@@ -8,7 +8,7 @@ import {
   fireEvent,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { mockHotelData } from "../fixtures/mockHotelData";
+import { mockHotelsData } from "../fixtures/mockHotelsData";
 
 import HotelListContainer from "./HotelListContainer";
 import { fetchHotels } from "../api/hotelApi";
@@ -17,7 +17,7 @@ jest.mock("../api/hotelApi");
 
 describe("HotelListContainer", () => {
   beforeEach(() => {
-    (fetchHotels as jest.Mock).mockResolvedValue(mockHotelData);
+    (fetchHotels as jest.Mock).mockResolvedValue(mockHotelsData);
   });
 
   test("Renders hotel list container", async () => {
