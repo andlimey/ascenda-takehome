@@ -10,6 +10,7 @@ import TextField from "@mui/material/TextField";
 import Radio from "@mui/material/Radio";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import Box from "@mui/material/Box";
 
 interface HotelFiltersProps {
   filters: HotelFilterOptions;
@@ -33,7 +34,7 @@ const HotelFilters: React.FC<HotelFiltersProps> = ({
   clearFilters,
 }) => {
   return (
-    <>
+    <Box>
       {/* Filter hotels by Star Rating */}
       <Typography fontWeight="bold">Stars</Typography>
       {[1, 2, 3, 4, 5].map((rating) => (
@@ -114,7 +115,7 @@ const HotelFilters: React.FC<HotelFiltersProps> = ({
       <Button variant="outlined" onClick={clearFilters}>
         Clear Filters
       </Button>
-    </>
+    </Box>
   );
 };
 

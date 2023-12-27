@@ -4,6 +4,7 @@ import { Hotel } from "../types/Hotel";
 import { HotelFilterOptions } from "../types/HotelFilterOptions";
 import { SortOrder } from "../types/SortOrder";
 import Stack from "@mui/material/Stack";
+import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import HotelList from "./HotelList";
 import HotelFilters from "./HotelFilters";
@@ -78,22 +79,26 @@ const HotelListContainer: React.FC<{}> = () => {
   }, [hotels, filters, sortOrder]);
 
   return (
-    <Stack spacing={2}>
-      <Typography variant="h2">Hotels</Typography>
-
-      <HotelFilters
-        filters={filters}
-        absolutePriceRange={absolutePriceRange}
-        priceRange={priceRange}
-        sortOrder={sortOrder}
-        onFilterChange={setFilters}
-        onSortOrderChange={setSortOrder}
-        onPriceChange={handlePriceChange}
-        clearFilters={clearFilters}
-      />
-
-      <HotelList hotels={filteredHotels} />
-    </Stack>
+    <Grid container spacing={2} padding={2}>
+      <Grid item xs={4}>
+        <HotelFilters
+          filters={filters}
+          absolutePriceRange={absolutePriceRange}
+          priceRange={priceRange}
+          sortOrder={sortOrder}
+          onFilterChange={setFilters}
+          onSortOrderChange={setSortOrder}
+          onPriceChange={handlePriceChange}
+          clearFilters={clearFilters}
+        />
+      </Grid>
+      <Grid item xs={8}>
+        <Stack direction="column" spacing={2}>
+          <Typography variant="h2">Hotels</Typography>
+          <HotelList hotels={filteredHotels} />
+        </Stack>
+      </Grid>
+    </Grid>
   );
 
   function handlePriceChange(_event: Event, newValue: number | number[]) {
