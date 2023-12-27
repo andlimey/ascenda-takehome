@@ -6,9 +6,11 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
+import "./HotelCard.css";
+
 export const HotelCard: React.FC<{ hotel: Hotel }> = ({ hotel }) => {
   return (
-    <Link to={`/hotel/${hotel.id}`}>
+    <Link to={`/hotel/${hotel.id}`} className="hotel-link">
       <Card sx={{ maxWidth: 900 }}>
         <CardMedia
           component="img"
