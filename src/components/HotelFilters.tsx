@@ -48,7 +48,7 @@ const HotelFilters: React.FC<HotelFiltersProps> = ({
               onChange={(e) => {
                 const updatedStars = e.target.checked
                   ? [...filters.stars, star]
-                  : filters.stars.filter((star) => star !== star);
+                  : filters.stars.filter((s) => s !== star);
                 onFilterChange({ ...filters, stars: updatedStars });
               }}
             />
