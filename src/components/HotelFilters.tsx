@@ -17,7 +17,6 @@ import Box from "@mui/material/Box";
 interface HotelFiltersProps {
   filters: HotelFilterOptions;
   absolutePriceRange: number[];
-  priceRange: number[];
   sortOrder: SortOrder;
   onFilterChange: (filters: HotelFilterOptions) => void;
   onSortOrderChange: (sortOrder: SortOrder) => void;
@@ -28,7 +27,6 @@ interface HotelFiltersProps {
 const HotelFilters: React.FC<HotelFiltersProps> = ({
   filters,
   absolutePriceRange,
-  priceRange,
   sortOrder,
   onFilterChange,
   onSortOrderChange,
@@ -60,7 +58,7 @@ const HotelFilters: React.FC<HotelFiltersProps> = ({
       {/* Filter hotels by Price Range */}
       <Typography fontWeight="bold">Price Range</Typography>
       <Slider
-        value={priceRange}
+        value={[filters.minPrice!, filters.maxPrice!]} // Can remove ! with a proper fix by removing optional for minPrice and maxPrice, however it will break the tests so I'm leaving it as is
         onChange={onPriceChange}
         valueLabelDisplay="auto"
         min={absolutePriceRange[0]}

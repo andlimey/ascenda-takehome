@@ -18,11 +18,12 @@ const HotelListContainer: React.FC<{}> = () => {
     searchText: "",
     ratings: [],
     stars: [],
+    minPrice: 0,
+    maxPrice: 0,
   } as HotelFilterOptions);
   const [absolutePriceRange, setAbsolutePriceRange] = useState<number[]>([
     0, 0,
   ]);
-  const [priceRange, setPriceRange] = useState<number[]>([0, 0]);
   const [sortOrder, setSortOrder] = useState<SortOrder>("");
 
   useEffect(() => {
@@ -35,7 +36,7 @@ const HotelListContainer: React.FC<{}> = () => {
       const maxPrice = Math.max(...prices);
 
       setAbsolutePriceRange([minPrice, maxPrice]);
-      setPriceRange([minPrice, maxPrice]);
+      setFilters({...filters, minPrice, maxPrice});
     });
   }, []);
 
@@ -52,7 +53,6 @@ const HotelListContainer: React.FC<{}> = () => {
         <HotelFilters
           filters={filters}
           absolutePriceRange={absolutePriceRange}
-          priceRange={priceRange}
           sortOrder={sortOrder}
           onFilterChange={setFilters}
           onSortOrderChange={setSortOrder}
@@ -70,18 +70,15 @@ const HotelListContainer: React.FC<{}> = () => {
   );
 
   function handlePriceChange(_event: Event, newValue: number | number[]) {
-    setPriceRange(newValue as number[]);
-
     if (Array.isArray(newValue)) {
       setFilters({ ...filters, minPrice: newValue[0], maxPrice: newValue[1] });
     }
   }
 
   function clearFilters() {
-    setFilters({ searchText: "", stars: [], ratings: [] });
+    setFilters({ searchText: "", stars: [], ratings: [], minPrice: 0, maxPrice: 0 });
     setFilteredHotels(hotels);
     setSortOrder("");
-    setPriceRange(absolutePriceRange);
   }
 };
 
